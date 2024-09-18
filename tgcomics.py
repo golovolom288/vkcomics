@@ -13,9 +13,9 @@ def get_comics():
     site_url = f"https://xkcd.com/{comics_number}/info.0.json"
     site_response = requests.get(site_url)
     site_response.raise_for_status()
-    site_json = site_response.json()
-    comics_comment = site_json["alt"]
-    comics_url = site_json["img"]
+    comics = site_response.json()
+    comics_comment = comics["alt"]
+    comics_url = comics["img"]
     return comics_url, comics_comment
 
 
@@ -39,5 +39,5 @@ if __name__ == "__main__":
     CHAT_ID = os.environ["tg_group_id"]
     os.makedirs("comics", exist_ok=True)
     save_img(get_comics()[0], "comics/comics.jpg")
-    send_posts_tg_bot(tg_bot_token, chat_id, get_comics()[1], directory="comics/")
+    send_posts_tg_bot(tg_bot_token, CHAT_ID, get_comics()[1], directory="comics/")
     shutil.rmtree("comics")
