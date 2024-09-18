@@ -37,7 +37,9 @@ if __name__ == "__main__":
     load_dotenv()
     tg_bot_token = os.environ["TG_BOT_TOKEN"]
     CHAT_ID = os.environ["tg_group_id"]
-    os.makedirs("comics", exist_ok=True)
-    save_img(get_comics()[0], "comics/comics.jpg")
-    send_posts_tg_bot(tg_bot_token, CHAT_ID, get_comics()[1], directory="comics/")
-    shutil.rmtree("comics")
+    try:
+        os.makedirs("comics", exist_ok=True)
+        save_img(get_comics()[0], "comics/comics.jpg")
+        send_posts_tg_bot(tg_bot_token, CHAT_ID, get_comics()[1], directory="comics/")
+    finally:
+        shutil.rmtree("comics")
