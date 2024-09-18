@@ -7,7 +7,9 @@ import requests
 
 
 def get_comics():
-    comics_number = random.randrange(1, 2984, 1)
+    min_index_comics = 1
+    max_index_comics = 2984
+    comics_number = random.randrange(min_index_comics, max_index_comics, 1)
     site_url = f"https://xkcd.com/{comics_number}/info.0.json"
     site_response = requests.get(site_url)
     site_response.raise_for_status()
@@ -34,7 +36,7 @@ def send_posts_tg_bot(tg_bot_token, chat_id, alt, directory="comics/"):
 if __name__ == "__main__":
     load_dotenv()
     tg_bot_token = os.environ["TG_BOT_TOKEN"]
-    chat_id = os.environ["tg_group_id"]
+    CHAT_ID = os.environ["tg_group_id"]
     os.makedirs("comics", exist_ok=True)
     save_img(get_comics()[0], "comics/comics.jpg")
     send_posts_tg_bot(tg_bot_token, chat_id, get_comics()[1], directory="comics/")
