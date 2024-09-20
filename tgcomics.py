@@ -4,6 +4,7 @@ import telegram
 import random
 import shutil
 import requests
+import pathlib
 
 
 def get_comics():
@@ -38,9 +39,10 @@ if __name__ == "__main__":
     load_dotenv()
     tg_bot_token = os.environ["TG_BOT_TOKEN"]
     CHAT_ID = os.environ["tg_group_id"]
+    file_path = pathlib.Path.home() / "Desktop" / "python_projects" / "vkcomics" / "comics" / "comics.jpg"
     try:
         os.makedirs("comics", exist_ok=True)
-        save_img(comics_url, "comics/comics.jpg")
+        save_img(comics_url, file_path)
         send_posts_tg_bot(tg_bot_token, CHAT_ID, comics_comment, directory="comics/")
     finally:
         shutil.rmtree("comics")
