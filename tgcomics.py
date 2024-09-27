@@ -27,7 +27,7 @@ def save_img(url, filepath):
         file.write(response.content)
 
 
-def send_posts_tg_bot(tg_bot_token, chat_id, alt, directory="comics/"):
+def send_posts_tg_bot(tg_bot_token, chat_id, alt, directory="comics"):
     bot = telegram.Bot(token=tg_bot_token)
     photo_path = os.path.join(directory, "comics.jpg")
     with open(photo_path, "rb") as photo:
@@ -39,10 +39,10 @@ if __name__ == "__main__":
     load_dotenv()
     tg_bot_token = os.environ["TG_BOT_TOKEN"]
     chat_id = os.environ["TG_GROUP_ID"]
-    file_path = pathlib.Path.home() / "Desktop" / "python_projects" / "vkcomics" / "comics" / "comics.jpg"
+    file_path = pathlib.Path("comics/comics.jpg")
     try:
         os.makedirs("comics", exist_ok=True)
         save_img(comics_url, file_path)
-        send_posts_tg_bot(tg_bot_token, chat_id, comics_comment, directory="comics/")
+        send_posts_tg_bot(tg_bot_token, chat_id, comics_comment, directory="comics")
     finally:
         shutil.rmtree("comics")
